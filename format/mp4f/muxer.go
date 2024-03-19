@@ -7,14 +7,14 @@ import (
 	"os"
 	"time"
 
-	"github.com/deepch/vdk/av"
-	"github.com/deepch/vdk/codec/aacparser"
-	"github.com/deepch/vdk/codec/h264parser"
-	"github.com/deepch/vdk/codec/h265parser"
-	"github.com/deepch/vdk/format/fmp4/fmp4io"
-	"github.com/deepch/vdk/format/mp4/mp4io"
-	"github.com/deepch/vdk/format/mp4f/mp4fio"
-	"github.com/deepch/vdk/utils/bits/pio"
+	"github.com/abxuz/vdk/av"
+	"github.com/abxuz/vdk/codec/aacparser"
+	"github.com/abxuz/vdk/codec/h264parser"
+	"github.com/abxuz/vdk/codec/h265parser"
+	"github.com/abxuz/vdk/format/fmp4/fmp4io"
+	"github.com/abxuz/vdk/format/mp4/mp4io"
+	"github.com/abxuz/vdk/format/mp4f/mp4fio"
+	"github.com/abxuz/vdk/utils/bits/pio"
 )
 
 type Muxer struct {
@@ -37,7 +37,7 @@ func (self *Muxer) SetMaxFrames(count int) {
 }
 func (self *Muxer) newStream(codec av.CodecData) (err error) {
 	switch codec.Type() {
-	case av.H264, av.H265, av.AAC:
+	case av.H264, av.H265, av.AAC, av.PCM_ALAW:
 	default:
 		err = fmt.Errorf("fmp4: codec type=%v is not supported", codec.Type())
 		return
@@ -78,13 +78,10 @@ func (self *Muxer) newStream(codec av.CodecData) (err error) {
 		},
 	}
 	switch codec.Type() {
-	case av.H264:
+	case av.H264, av.H265:
 		stream.sample.SyncSample = &mp4io.SyncSample{}
 		stream.timeScale = 90000
-	case av.H265:
-		stream.sample.SyncSample = &mp4io.SyncSample{}
-		stream.timeScale = 90000
-	case av.AAC:
+	case av.AAC, av.PCM_ALAW:
 		stream.timeScale = int64(codec.(av.AudioCodecData).SampleRate())
 	}
 

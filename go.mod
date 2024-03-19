@@ -1,6 +1,6 @@
-module github.com/deepch/vdk
+module github.com/abxuz/vdk
 
-go 1.18
+go 1.22.1
 
 require (
 	github.com/google/uuid v1.3.0

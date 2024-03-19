@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/deepch/vdk/av"
-	"github.com/deepch/vdk/utils/bits"
-	"github.com/deepch/vdk/utils/bits/pio"
+	"github.com/abxuz/vdk/av"
+	"github.com/abxuz/vdk/utils/bits"
+	"github.com/abxuz/vdk/utils/bits/pio"
 )
 
 type SPSInfo struct {
